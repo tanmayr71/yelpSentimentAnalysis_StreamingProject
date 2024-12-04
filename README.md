@@ -249,6 +249,29 @@ Connect your Elasticsearch instance to Kibana or use tools like Tableau to creat
 
 ---
 
+### 6. Visualize Data Using ElasticSearch Dashboards
+
+ElasticSearch provides built-in visualization tools that allow you to gain insights into the processed sentiment analysis data. Below are the examples of visualizations created using the indexed data in ElasticSearch:
+
+#### Bar Graph: Count of Reviews per Sentiment Category
+This bar graph shows the **count of reviews** classified into the categories `Positive`, `Negative`, and `Neutral`. The visualization helps to identify the distribution of sentiments across the dataset.
+
+![Count of Reviews Bar Graph](assets/screenshots/Count_BarGraph_Feedback.png)
+
+#### Pie Chart: Percentage of Reviews by Sentiment Category
+A pie chart was created to represent the **percentage distribution** of reviews into the sentiment categories. This visualization provides a clear understanding of how reviews are split across sentiments.
+
+![Percentage of Reviews Pie Chart](assets/screenshots/Percentage_PieChart_Feedback.png)
+
+#### Bar Graph: Standard Deviation of Stars by Sentiment
+This bar graph displays the **standard deviation of star ratings** for reviews grouped by sentiment categories. It helps in analyzing the variability of star ratings for each sentiment type.
+
+![Standard Deviation of Stars Bar Graph](assets/screenshots/Std_Dev_BarGraph_Feedback_Stars.png)
+
+---
+
+These visualizations provide a comprehensive understanding of the sentiment analysis results and their relationship with star ratings, allowing for effective data-driven insights.
+
 ## Directory Structure
 
 ```
