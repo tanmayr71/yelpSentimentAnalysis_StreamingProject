@@ -232,7 +232,7 @@ You can monitor the performance of the `Kafka Elastic Search Sink Connector` in 
 
 Once the connector is set up, data from Kafka will be indexed in Elasticsearch. You can verify this by querying Elasticsearch:
 ```bash
-curl -X GET "http://your-elasticsearch-host:9200/customers_review/_search?pretty"
+curl -u "<your-username>:<your-password>" -X GET "https://<your-elasticsearch-host>:443/customers_review/_search?pretty"
 ```
 
 Below is the `Elasticsearch dashboard` showing the successfully indexed `customers_review` data:
