@@ -20,9 +20,8 @@ services:
     networks:
       - tanmay-network
 
-  spark-worker: &worker
-    container_name: spark-worker
-    hostname: spark-worker
+  spark-worker:
+    &worker
     build:
       context: .
       dockerfile: Dockerfile.spark
@@ -43,13 +42,25 @@ services:
     networks:
       - tanmay-network
 
-#  spark-worker-2:
+  spark-worker-2:
+    <<: *worker
+    container_name: spark-worker-2
+    hostname: spark-worker-2
+
+  spark-worker-3:
+    <<: *worker
+    container_name: spark-worker-3
+    hostname: spark-worker-3
+
+  spark-worker-4:
+    <<: *worker
+    container_name: spark-worker-4
+    hostname: spark-worker-4
+
+#  spark-worker-5:
 #    <<: *worker
-#
-#  spark-worker-3:
-#    <<: *worker
-#
-#  spark-worker-4:
-#    <<: *worker
+#    container_name: spark-worker-5
+#    hostname: spark-worker-5
+
 networks:
   tanmay-network:

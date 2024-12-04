@@ -117,6 +117,38 @@ cd src
 docker-compose up -d --build
 ```
 
+![alt text](assets/screenshots/image-1.png)
+
+### Configuring Multiple Spark Workers
+
+This project allows you to configure multiple Spark workers to distribute the workload effectively. By default, the docker-compose.yml is configured to start one master and one worker. However, you can easily provision additional workers based on your computational requirements.
+
+To add more workers, update the docker-compose.yml file as follows:
+
+```bash
+spark-worker-2:
+  <<: *worker
+  container_name: spark-worker-2
+  hostname: spark-worker-2
+
+spark-worker-3:
+  <<: *worker
+  container_name: spark-worker-3
+  hostname: spark-worker-3
+
+spark-worker-4:
+  <<: *worker
+  container_name: spark-worker-4
+  hostname: spark-worker-4
+```
+
+![alt text](assets/screenshots/image-2.png)
+
+#### Notes on Worker Provisioning:
+- You can provision as many workers as your system resources allow.Elasticsearch Sink Connector
+- Each worker is configured to use `2 cores` and `1 GB` of memory by default. You can adjust these settings in the `docker-compose.yml` file under the `SPARK_WORKER_CORES` and `SPARK_WORKER_MEMORY` environment variables.
+- Adding more workers enhances parallelism and reduces the processing time for large datasets or high-frequency streaming data.
+
 ---
 
 ## Running the Project
@@ -135,6 +167,8 @@ python jobs/streaming-socket.py
 
 This script streams data from your dataset over a TCP socket.
 
+![alt text](assets/screenshots/image.png)
+
 ---
 
 ### 2. Submit the Spark Streaming Job
@@ -152,6 +186,17 @@ spark-submit \
 jobs/spark-streaming.py
 ```
 
+After the job submission, you can monitor the Spark Master UI at http://localhost:9090 to view the workers and the workload distribution across them. Below is an example of the Spark Master dashboard with four workers:
+
+#### Spark Master with Multiple Workers
+
+![alt text](assets/screenshots/Spark_Master_MultipleWorkers.png)
+
+#### Application Running Across Workers
+
+![alt text](assets/screenshots/Application_Running_SocketStreamConsumer.png)
+
+
 ---
 
 ### 3. Set Up Kafka Connect Sink Connector
@@ -167,6 +212,20 @@ Set up a Kafka Connect sink connector to move data from your Kafka topic to Elas
   - `schema.ignore: true`
   - `type.name: _doc` (for Elasticsearch 7.x and above)
 
+In the `Confluent Cloud` dashboard, you can verify that your Kafka cluster (`review_cluster`) is running and view real-time statistics such as production and consumption rates for the `customers_review` topic:
+
+![alt text](<assets/screenshots/Screenshot 2024-12-03 at 8.18.24 PM.png>)
+
+Here’s how the Kafka environment and the `customers_review` topic look in `Confluent Cloud`:
+
+![alt text](<assets/screenshots/Screenshot 2024-12-03 at 8.18.56 PM.png>)
+
+### Monitor Connector Performance
+
+You can monitor the performance of the `Kafka Elastic Search Sink Connector` in the `Confluent Cloud UI`. The dashboard provides insights into the number of messages processed and the status of the connector:
+
+![alt text](<assets/screenshots/Screenshot 2024-12-03 at 8.19.10 PM.png>)
+
 ---
 
 ### 4. Verify Data in Elasticsearch
@@ -176,7 +235,11 @@ Once the connector is set up, data from Kafka will be indexed in Elasticsearch. 
 curl -X GET "http://your-elasticsearch-host:9200/customers_review/_search?pretty"
 ```
 
-Or use Kibana to visualize and analyze the data.
+Below is the `Elasticsearch dashboard` showing the successfully indexed `customers_review` data:
+
+![alt text](<assets/screenshots/Screenshot 2024-12-03 at 8.19.26 PM.png>)
+
+You can see the documents indexed under the `customers_review` index and explore them in Elasticsearch or connect to visualization tools like `Tableau` or `Kibana` or `PowerBI`.
 
 ---
 
