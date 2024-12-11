@@ -114,7 +114,11 @@ You can replace the file path in the script with your own dataset file path as n
 Navigate to the `src/` directory and build the Docker containers:
 ```bash
 cd src
-docker-compose up -d --build
+```
+
+Build command
+```
+docker compose up -d --build
 ```
 
 ![alt text](assets/screenshots/image-1.png)
